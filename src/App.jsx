@@ -1,6 +1,9 @@
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
+import Header from "./components/Header";
 
 function App() {
+
+  const [ searchTerm, setSearchTerm ] = useState('');
 
   useEffect(() => {
     console.log('use effect');
@@ -8,11 +11,15 @@ function App() {
   }, [])
 
   return (
-    <>
-      <h1 className="text-3xl font-bold text-red-500">
-        Hello world!
-      </h1>
-    </>
+    <main>
+      <div className="pattern" />
+
+      <div className="wrapper">
+        <Header
+          searchTerm={ searchTerm }
+          setSearchTerm={ setSearchTerm } />
+      </div>
+    </main>
   )
 }
 
