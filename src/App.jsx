@@ -1,7 +1,10 @@
+// https://github.com/adrianhajdin/react-movies/blob/main/
+
 import { useState, useEffect } from "react"
+import { apiKey } from "./config/config";
+
 import Header from "./components/Header"
 import Spinner from "./components/Spinner"
-import { apiKey } from "./config/config";
 import MoviesGrid from "./components/MoviesGrid";
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';

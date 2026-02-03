@@ -1,6 +1,5 @@
 import MovieCard from "./MovieCard";
 
-
 const MoviesGrid = ({ movies }) => {
   return (
     <ul>
