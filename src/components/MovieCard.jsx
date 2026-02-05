@@ -1,7 +1,7 @@
 
 
 const MovieCard = ({ movie: {
-  title, adult, poster_path, vote_average, original_language
+  title, adult, poster_path, vote_average, original_language,release_date
 } }) => {
   return (
     <li>
@@ -9,7 +9,7 @@ const MovieCard = ({ movie: {
         <img
           src={poster_path ?
           `https://image.tmdb.org/t/p/w500/${poster_path}` :
-          './assets/images/no-movie.png'}
+          './assets/images/no-movie.png' }
           alt="movie poster"
         />
         <div className="mt-4">
@@ -17,6 +17,11 @@ const MovieCard = ({ movie: {
           <div className="content">
             <div className="rating">
               <img src="./assets/images/star.svg" alt="Star Icon" />
+              <p>{vote_average ? vote_average.toFixed(1) : 'N/A'}</p>
+              <span> • </span>
+              <p className="lang">{original_language}</p>
+              <span> • </span>
+              <p className="year">{release_date?release_date.split('-')[0]:'N/A'}</p>
             </div>
           </div>
         </div>
