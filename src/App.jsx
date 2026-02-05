@@ -1,11 +1,12 @@
 // https://github.com/adrianhajdin/react-movies/blob/main/
 
 import { useState, useEffect } from "react"
-import { apiKey } from "./config/config";
+import { useDebounce } from "react-use"
+import { apiKey } from "./config/config"
 
 import Header from "./components/Header"
 import Spinner from "./components/Spinner"
-import MoviesGrid from "./components/MoviesGrid";
+import MoviesGrid from "./components/MoviesGrid"
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 const API_KEY = apiKey;
@@ -19,9 +20,12 @@ const API_OPTIONS = {
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  useDebounce(() => setDebouncedSearchTerm(searchTerm),800,[searchTerm]);
 
   const fetchMovies = async (query='') => {
     setIsLoading(true);
@@ -30,6 +34,7 @@ function App() {
       const endpoint = query
         ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
         : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+
       const response = await fetch(endpoint, API_OPTIONS);
 
       if (!response.ok) {
@@ -41,6 +46,7 @@ function App() {
         setMovies([]);
         return;
       }
+
       console.log(data.results);
 
       setMovies(data.results || []);
@@ -53,8 +59,8 @@ function App() {
   }
 
   useEffect(() => {
-    fetchMovies(searchTerm);
-  }, [searchTerm])
+    fetchMovies(debouncedSearchTerm);
+  }, [debouncedSearchTerm])
 
   return (
     <main>
