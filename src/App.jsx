@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from "react"
 import { useDebounce } from "react-use"
-import { apiKey } from "./config/config"
 
 import Header from "./components/Header"
 import Spinner from "./components/Spinner"
 import MoviesGrid from "./components/MoviesGrid"
+import { updateSearchCount } from "./appwrite"
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
-const API_KEY = apiKey;
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const API_OPTIONS = {
   method: 'GET',
   headers: {
@@ -50,6 +50,8 @@ function App() {
       console.log(data.results);
 
       setMovies(data.results || []);
+
+      updateSearchCount();
     } catch (error) {
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage('Error fetching movies');
